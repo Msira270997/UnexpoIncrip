@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+    .container.py-2
+        .row     
+            .col-12.py-2
+                h2= title        
+            .col-12.py-2
+                table.table
+                    thead
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Especialidad
+                            th(scope='col') Nombre
+                            th(scope='col') Email
+                            th(scope='col') Fecha Creación
+                            th(scope='col') 
+                    tbody
+                        -for(let i= 0; i < students.length; i++)
+                            tr
+                                th(scope='row')=students[i].id
+                                td=students[i].specialty
+                                td=students[i].name
+                                td=students[i].email
+                                td=students[i].created_at.toLocaleString()
+                                td 
+                                    a.bi.bi-pencil-square.mx-2(href="/student/update/" + students[i].id, style="text-decoration: none;")                                    
+                                    a.bi.bi-trash2-fill.mx-2(href="#")
+                        
+            .col-12.py-2
+                a.btn.btn-primary(href="/student/new") Nuevo Estudante

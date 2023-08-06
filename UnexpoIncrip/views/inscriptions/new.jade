@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+
+    form(action="/inscriptions/new", method= "POST")
+        .container.py-2
+            .row
+                .col-12.py-2
+                    h2= title
+                .col-md-6.col-12
+                    label.form-label(for="student") Estudiante
+                    select#student.form-control(type="text", name="student")
+                        -for(let i = 0; i < students.length; i++)
+                            option(value=students[i].id)=students[i].name
+
+                .col-md-6.col-12
+                    label.form-label(for="period") Periodo
+                    select#period.form-control(type="text", name="period")
+                        -for(let i = 0; i < periods.length; i++)
+                            option(value=periods[i].id)=periods[i].name
+
+                .col-md-6.col-12
+                    label.form-label(for="detail") Detalle
+                    textarea#detail.form-control(name="detail")
+
+                .col-md-12.col-12
+                    br
+
+                //- .col-md-6.col-12.py-2
+                //-     label.form-label(for="specialty") Especialidad
+                //-     select#specialty.form-select(name="specialty")
+                //-         //-option(value="1") Sistemas
+                //-         -for(let i = 0; i < specialties.length; i++)
+                //-             option(value=specialties[i].id)=specialties[i].name
+
+                .col-md-12.col-12
+                    br
+
+                .col-md-12.col-12.py-2
+                    button.btn.btn-primary(type="submit") Crear
+                    a.btn.btn-secondary(href="/student") Cancelar

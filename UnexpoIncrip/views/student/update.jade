@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+    
+    form(action="/student/update", method= "POST")
+        input(type="hidden", name="id", value=student.id)
+        .container.py-2
+            .row 
+                .col-12.py-2
+                    h2= title
+                .col-md-6.col-12 
+                    label.form-label(for="name") Nombre 
+                    input#name.form-control(type="text", name="name", value=student.name)
+
+                .col-md-6.col-12 
+                    label.form-label(for="email") Email 
+                    input#email.form-control(type="text", name="email", value=student.email)
+
+                .col-md-12.col-12 
+                    br
+
+                .col-md-6.col-12.py-2 
+                    label.form-label(for="specialty") Especialidad 
+                    select#specialty.form-select(name="specialty")                        
+                        -for(let i = 0; i < specialties.length; i++)
+                            option(value=specialties[i].id, selected = value=(student.specialty_id == specialties[i].id))=specialties[i].name
+
+                .col-md-12.col-12 
+                    br
+
+                .col-md-12.col-12.py-2 
+                    button.btn.btn-primary(type="submit") Actualizar
+                    |  
+                    a.btn.btn-secondary(href="/student") Cancelar

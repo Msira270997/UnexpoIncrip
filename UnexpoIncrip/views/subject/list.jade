@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+    .container.py-2
+        .row     
+            .col-12.py-2
+                h2= title        
+            .col-12.py-2
+                table.table
+                    thead
+                        tr
+                            th(scope='col') #                            
+                            th(scope='col') Nombre
+                            th(scope='col') Creditos
+                            th(scope='col') Fecha Creación
+                            th(scope='col')
+                    tbody
+                        -for(let i= 0; i < subjects.length; i++)
+                            tr
+                                th(scope='row')=subjects[i].id                                
+                                td=subjects[i].name
+                                td=subjects[i].credits
+                                td=subjects[i].created_at.toLocaleString()
+                                td 
+                                    a.bi.bi-pencil-square.mx-2(href="/subject/update/" + subjects[i].id, style="text-decoration: none;")                                    
+                                    a.bi.bi-trash2-fill.mx-2(href="#")                                
+                        
+            .col-12.py-2
+                a.btn.btn-primary(href="/subject/new") Nueva Materia

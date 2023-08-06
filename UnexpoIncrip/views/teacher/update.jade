@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+    
+    form(action="/teacher/update", method= "POST")
+        input(type="hidden", name="id", value=teacher.id)
+        .container.py-2
+            .row 
+                .col-12.py-2
+                    h2= title
+                .col-md-6.col-12 
+                    label.form-label(for="name") Nombre 
+                    input#name.form-control(type="text", name="name", value=teacher.name)
+
+                .col-md-6.col-12 
+                    label.form-label(for="email") Email 
+                    input#email.form-control(type="text", name="email", value=teacher.email)
+
+                .col-md-12.col-12 
+                    br
+
+                .col-md-6.col-12 
+                    label.form-label(for="age") Edad 
+                    input#age.form-control(type="int", name="age", value=teacher.age)
+
+
+                .col-md-6.col-12 
+                    label.form-label(for="phone") Telefono 
+                    input#phone.form-control(type="text", name="phone", value=teacher.phone)
+
+
+                .col-md-12.col-12 
+                    br
+
+
+                .col-md-12.col-12.py-2 
+                    button.btn.btn-primary(type="submit") Actualizar
+                    |  
+                    a.btn.btn-secondary(href="/teacher") Cancelar
+                

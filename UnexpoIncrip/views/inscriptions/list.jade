@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    .container.py-2
+        .row
+            .col-12.py-2
+                h2= title
+            .col-12.py-2
+                table.table
+                    thead
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Estudiante
+                            th(scope='col') Periodo
+                            th(scope='col') Fecha Creación
+                            th(scope='col') Detalles
+                            th(scope='col') Estado
+                            th(scope='col')
+                    tbody
+                        -for(let i= 0; i < inscriptions.length; i++)
+                            tr
+                                th(scope='row')=inscriptions[i].id
+                                td=inscriptions[i].student
+                                td=inscriptions[i].period
+                                td=inscriptions[i].created_at.toLocaleString()
+                                td=inscriptions[i].detail
+                                td=inscriptions[i].status
+                                //- td
+                                //-     a.bi.bi-list-task.mx-2(href="/period/subject/" + inscriptions[i].id, style="text-decoration: none;")
+
+
+            .col-12.py-2
+                a.btn.btn-primary(href="/inscriptions/new") Nueva Inscripcion

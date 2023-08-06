@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    
+    form(action="/subject/new", method= "POST")
+        .container.py-2
+            .row 
+                .col-12.py-2
+                    h2= title
+                .col-md-6.col-12 
+                    label.form-label(for="name") Nombre 
+                    input#name.form-control(type="text", name="name")
+
+                .col-md-6.col-12 
+                    label.form-label(for="credits") Creditos 
+                    input#credits.form-control(type="text", name="credits")
+
+                .col-md-12.col-12 
+                    br
+
+                .col-md-6.col-12 
+                    label.form-label(for="description") Description 
+                    textarea#description.form-control(name="description")
+
+                .col-md-12.col-12 
+                    br
+
+
+                .col-md-12.col-12.py-2 
+                    button.btn.btn-primary(type="submit") Crear
+                    |  
+                    a.btn.btn-secondary(href="/subject") Cancelar
+                
