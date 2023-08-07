@@ -42,5 +42,19 @@ router.post('/new', async function (req, res) {
     res.redirect('/inscriptions');
 })
 
+router.get('/subject/:inscription_id', async function (req, res) {
+    var inscriptions_db = new inscriptionsDB.Inscriptions();
+
+    var inscription_details = await inscriptions_db.filter_subject_period({});
+    var inscriptions = await inscriptions_db.filter({id: req.params.inscription_id});
+    let inscription_period = inscriptions[0].period_id;
+
+    res.render('inscriptions/list_subjects', {
+        title: "Listado de materias para inscribir",
+        inscription_details: inscription_details,
+        inscription_id: req.params.inscription_id,
+        inscription_period: inscription_period
+    })
+})
 
 module.exports = router;
