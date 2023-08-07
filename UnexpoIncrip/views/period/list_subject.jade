@@ -2,34 +2,38 @@ extends ../layout
 
 block content
     .container.py-2
-        .row     
+        .row
             .col-12.py-2
-                h2= title        
+                h2= title
             .col-12.py-2
                 table.table
                     thead
                         tr
-                            th(scope='col') #                            
-                            th(scope='col') Periodo                            
-                            th(scope='col') Materia                            
-                            th(scope='col') Profesor                            
+                            th(scope='col') #
+                            th(scope='col') Periodo
+                            th(scope='col') Materia
+                            th(scope='col') Profesor
                             th(scope='col') Fecha Creación
                             th(scope='col')
                     tbody
                         -for(let i= 0; i < list.length; i++)
                             tr
-                                th(scope='row')=list[i].id                                
-                                td=list[i].period                                
-                                td=list[i].subject 
-                                td=list[i].teacher                                
+                                th(scope='row')=list[i].id
+                                td=list[i].period
+                                td=list[i].subject
+                                td=list[i].teacher
                                 td=list[i].created_at.toLocaleString()
-                                td                                     
-                                    a.bi.bi-trash2-fill.mx-2(href="#", onclick=`DeleteSubject(${list[i].id}, ${list[i].period_id}); return false`)                                
-                        
-            .col-12.py-2
-                a.btn.btn-primary(href="/period/subject/new/" + period_id) Aperturar Materia
-                | 
-                a.btn.btn-secondary(href="/period/") Regresar
+                                td
+                                    a.bi.bi-trash2-fill.mx-2(href="#", onclick=`DeleteSubject(${list[i].id}, ${list[i].period_id}); return false`)
+
+            -if(period_id)
+                .col-12.py-2
+                    a.btn.btn-primary(href="/period/subject/new/" + period_id) Aperturar Materia
+                    a.btn.btn-secondary(href="/period/") Regresar
+
+            -if(inscription_period)
+                .col-12.py-2
+                    a.btn.btn-secondary(href="/inscriptions/subject/" + inscription_id) Regresar
 
     script.
         function DeleteSubject(id, period_id){
