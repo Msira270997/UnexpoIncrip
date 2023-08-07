@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    .container.py-2
+        .row
+            .col-12.py-2
+                h2= title
+            .col-12.py-2
+                table.table
+                    thead
+                        tr
+                            th(scope='col') #
+                            th(scope='col') Materia
+                            th(scope='col') Profesor
+                            th(scope='col') Seccion
+                            th(scope='col') Aula
+                            th(scope='col')
+                    tbody
+                        //- -for(let i= 0; i < inscription_details.length; i++)
+                        //-     tr
+                        //-         th(scope='row')=inscription_details[i].id
+                        //-         td=inscription_details[i].a_period_subject_id
+                        //-         td=inscription_details[i].inscription_id
+
+            .col-12.py-2
+                a.btn.btn-primary(href="/period/subject/" + inscription_period + "?inscription_id=" + inscription_id + "&inscription_period=" + inscription_period) Asignar Materia
+                a.btn.btn-secondary(href="/inscriptions/") Regresar
