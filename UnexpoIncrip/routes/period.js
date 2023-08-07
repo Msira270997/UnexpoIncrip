@@ -40,6 +40,18 @@ router.get('/subject/:period_id', async function (req, res) { // req = request, 
     var period_db = new periodDB.Period();
 
     var list = await period_db.filter_subject({ period_id: req.params.period_id });
+
+    if (req.query.inscription_period) {
+        res.render('period/list_subject', {
+            title: "Materias por periodos academicos",
+            list: list,
+            inscription_id: req.query.inscription_id,
+            inscription_period: req.query.inscription_period
+        });
+
+        return;
+    }
+
     res.render('period/list_subject', {
         title: "Materias por periodos academicos",
         list: list,
