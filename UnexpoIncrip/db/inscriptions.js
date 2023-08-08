@@ -183,6 +183,67 @@ class Inscriptions {
             console.log(ex);
         };
     };
+
+    async delete_subject(subjectParm) {
+        try {
+            var sql = " DELETE FROM registration_details WHERE id = ?";
+            var param = [subjectParm.id];
+
+            var con = await connect.createConnection();
+
+            await new Promise((resolve, reject) => {
+                con.query(sql, param, function (err, result) {
+                    con.release(); // Importante siempre liberar la conexión despues de utilizarla.
+                    if (err) {
+                        console.log(err);
+                        reject(err)
+                        return;
+                    }
+                    resolve(result);
+                })
+            })
+
+        }
+        catch (ex) {
+            console.log(ex);
+        };
+    };
+
+
+    async update(criteria) {
+        try {
+            var sql = " UPDATE inscriptions SET status='Finalizado'";
+            var param = [];
+
+            let condition = "";
+
+            if (criteria.id) {
+                condition += (condition ? " AND " : " WHERE ") + (" id = ? ")
+                param.push(criteria.id)
+            }
+
+            sql += condition;
+
+            var con = await connect.createConnection();
+
+            await new Promise((resolve, reject) => {
+                con.query(sql, param, function (err, result) {
+                    con.release(); // Importante siempre liberar la conexión despues de utilizarla.
+                    if (err) {
+                        console.log(err);
+                        reject(err)
+                        return;
+                    }
+                    resolve(result);
+                })
+            })
+
+        }
+        catch (ex) {
+            console.log(ex);
+        }
+    }
+
 };
 
 module.exports.Inscriptions = Inscriptions;

@@ -52,6 +52,7 @@ router.get('/subject/:inscription_id', async function (req, res) {
     var inscription_details = await inscriptions_db.filter_subject_period({inscription_id: req.params.inscription_id});
     var inscriptions = await inscriptions_db.filter({id: req.params.inscription_id});
     let inscription_period = inscriptions[0].period_id;
+    let inscription_student = inscriptions[0].student;
     let subject = [];
     let teacher = [];
     for(i = 0; i < inscription_details.length; i++){
@@ -63,6 +64,7 @@ router.get('/subject/:inscription_id', async function (req, res) {
         })
     }
     res.render('inscriptions/list_subjects', {
+        wellcome: "Hola " + inscription_student,
         title: "Listado de materias para inscribir",
         inscription_details: inscription_details,
         inscription_id: req.params.inscription_id,
@@ -84,5 +86,29 @@ router.post('/subject/add', async function (req, res) {
 
     res.send(JSON.stringify({ code: 0 }));
 })
+
+router.post('/subject/delete', async function (req, res) {
+
+    var inscriptions_db = new inscriptionsDB.Inscriptions();
+
+    if (req.body.id)
+        await inscriptions_db.delete_subject({
+            id: req.body.id
+        });
+
+    res.send(JSON.stringify({ code: 0 }));
+})
+
+router.post('/subject/finish', async function (req, res) {
+
+    var inscriptions_db = new inscriptionsDB.Inscriptions();
+
+    if (req.body.inscription_id){
+        await inscriptions_db.update({id: req.body.inscription_id});
+    }
+
+    res.send(JSON.stringify({ code: 0 }));
+})
+
 
 module.exports = router;
