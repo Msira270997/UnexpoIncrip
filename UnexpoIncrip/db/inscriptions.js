@@ -97,7 +97,10 @@ class Inscriptions {
             var sql = ` SELECT
                             rd.id,
                             aps.id a_period_subject_id,
-                            i.id inscription_id
+                            aps.subject_id,
+                            aps.teacher_id,
+                            aps.section,
+                            aps.classroom
                         FROM
                             registration_details rd
                         INNER JOIN
@@ -108,24 +111,9 @@ class Inscriptions {
             var param = [];
             let condition = "";
 
-            if (criteria.id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.id = ? ")
-                param.push(criteria.id)
-            }
-
-            if (criteria.period_id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.period_id = ? ")
-                param.push(criteria.period_id)
-            }
-
-            if (criteria.teacher_id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.teacher_id = ? ")
-                param.push(criteria.teacher_id)
-            }
-
-            if (criteria.subject_id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.subject_id = ? ")
-                param.push(criteria.subject_id)
+            if (criteria.inscription_id) {
+                condition += (condition ? " AND " : " WHERE ") + (" rd.inscription_id = ? ")
+                param.push(criteria.inscription_id)
             }
 
             sql += condition;
@@ -150,7 +138,10 @@ class Inscriptions {
                         list.push({
                             id: result[i].id,
                             a_period_subject_id: result[i].a_period_subject_id,
-                            inscription_id: result[i].inscription_id
+                            subject_id: result[i].subject_id,
+                            teacher_id: result[i].teacher_id,
+                            section: result[i].section,
+                            classroom: result[i].classroom
                         })
                     }
 
@@ -168,76 +159,29 @@ class Inscriptions {
 
     };
 
-    async filter_subject_section(criteria) {
+    async add_subject(subjectParm) {
         try {
-            var sql = ` SELECT
-                            id,
-                            subject_id,
-                            section
-                        FROM
-                            academic_period_subject rd
-                       `;
-            var param = [];
-            let condition = "";
-
-            if (criteria.id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.id = ? ")
-                param.push(criteria.id)
-            }
-
-            if (criteria.period_id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.period_id = ? ")
-                param.push(criteria.period_id)
-            }
-
-            if (criteria.teacher_id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.teacher_id = ? ")
-                param.push(criteria.teacher_id)
-            }
-
-            if (criteria.subject_id) {
-                condition += (condition ? " AND " : " WHERE ") + (" ps.subject_id = ? ")
-                param.push(criteria.subject_id)
-            }
-
-            sql += condition;
-
-            if (criteria.limit)
-                sql += " limit " + criteria.limit
+            var sql = " INSERT INTO registration_details SET  inscription_id = ? , acad_per_subj_id = ?";
+            var param = [subjectParm.inscription_id, subjectParm.acad_per_subj_id];
 
             var con = await connect.createConnection();
 
-            var subject_section = await new Promise((resolve, reject) => {
+            await new Promise((resolve, reject) => {
                 con.query(sql, param, function (err, result) {
-
                     con.release(); // Importante siempre liberar la conexión despues de utilizarla.
                     if (err) {
+                        console.log(err);
                         reject(err)
                         return;
                     }
-
-                    var list = [];
-
-                    for (let i = 0; i < result.length; i++) {
-                        list.push({
-                            id: result[i].id,
-                            subject_id: result[i].subject_id,
-                            section: result[i].section
-                        })
-                    }
-
-                    resolve(list);
+                    resolve(result);
                 })
-
             })
-
-            return subject_section;
 
         }
         catch (ex) {
             console.log(ex);
         };
-
     };
 };
 
