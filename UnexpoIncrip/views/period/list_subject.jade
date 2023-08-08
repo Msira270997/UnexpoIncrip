@@ -6,40 +6,74 @@ block content
             .col-12.py-2
                 h2= title
             .col-12.py-2
-                table.table
-                    thead
-                        tr
-                            th(scope='col') #
-                            th(scope='col') Periodo
-                            th(scope='col') Materia
-                            th(scope='col') Profesor
-                            th(scope='col') Fecha Creación
-                            th(scope='col')
-                    tbody
-                        -for(let i= 0; i < list.length; i++)
+                -if(period_id)
+                    table.table
+                        thead
                             tr
-                                th(scope='row')=list[i].id
-                                td=list[i].period
-                                td=list[i].subject
-                                td=list[i].teacher
-                                td=list[i].created_at.toLocaleString()
-                                td
-                                    a.bi.bi-trash2-fill.mx-2(href="#", onclick=`DeleteSubject(${list[i].id}, ${list[i].period_id}); return false`)
+                                th(scope='col') #
+                                th(scope='col') Periodo
+                                th(scope='col') Materia
+                                th(scope='col') Profesor
+                                th(scope='col') Fecha Creación
+                                th(scope='col')
+                        tbody
+                            -for(let i= 0; i < list.length; i++)
+                                tr
+                                    th(scope='row')=list[i].id
+                                    td=list[i].period
+                                    td=list[i].subject
+                                    td=list[i].teacher
+                                    td=list[i].created_at.toLocaleString()
+                                    td
+                                        a.bi.bi-trash2-fill.mx-2(href="#", onclick=`DeleteSubject(${list[i].id}, ${list[i].period_id}); return false`)
 
-            -if(period_id)
-                .col-12.py-2
-                    a.btn.btn-primary(href="/period/subject/new/" + period_id) Aperturar Materia
-                    a.btn.btn-secondary(href="/period/") Regresar
+                    .col-12.py-2
+                        a.btn.btn-primary(href="/period/subject/new/" + period_id) Aperturar Materia
+                        a.btn.btn-secondary(href="/period/") Regresar
 
-            -if(inscription_period)
-                .col-12.py-2
-                    a.btn.btn-secondary(href="/inscriptions/subject/" + inscription_id) Regresar
+                -if(inscription_period)
+                    table.table
+                        thead
+                            -if(inscription_period)
+                                tr
+                                    th(scope='col') #
+                                    th(scope='col') Materia
+                                    th(scope='col') Profesor
+                                    th(scope='col') Aula
+                                    th(scope='col') Sección
+                                    th(scope='col')
+                        tbody
+                            -for(let i= 0; i < list.length; i++)
+                                tr
+                                    th(scope='row')=list[i].id
+                                    td=list[i].subject
+                                    td=list[i].teacher
+                                    td=list[i].classroom
+                                    td=list[i].section
+                                    td
+                                        a.bi.bi-arrow-right-circle-fill.mx-2(href="/inscriptions/subject/" + inscription_id, onclick=`AddSubjectInscription(${inscription_id}, ${list[i].id}); return false`)
+
+                    .col-12.py-2
+                        a.btn.btn-secondary(href="/inscriptions/subject/" + inscription_id) Regresar
 
     script.
         function DeleteSubject(id, period_id){
             fetch('/period/subject/delete',{
                     method: "POST",
                     body: JSON.stringify({'id': id,'period_id':period_id }),
+                      headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {console.log(data); location.reload() });
+        }
+
+        //- aps_id = academic period subject id
+        function AddSubjectInscription(inscription_id, aps_id){
+            fetch('/inscriptions/subject/add',{
+                    method: "POST",
+                    body: JSON.stringify({'inscription_id': inscription_id,'aps_id': aps_id }),
                       headers: {
                         "Content-Type": "application/json",
                     },
