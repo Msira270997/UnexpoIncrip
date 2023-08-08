@@ -4,6 +4,7 @@ block content
     .container.py-2
         .row
             .col-12.py-2
+                h2= wellcome
                 h2= title
             .col-12.py-2
                 table.table
@@ -23,7 +24,38 @@ block content
                                 td=teacher[i].teacher[0].name
                                 td=inscription_details[i].section
                                 td=inscription_details[i].classroom
+                                td
+                                    a.bi.bi-trash2-fill.mx-2(href="#", onclick=`DeleteSubjectInscription(${inscription_details[i].id}); return false`)
 
             .col-12.py-2
                 a.btn.btn-primary(href="/period/subject/" + inscription_period + "?inscription_id=" + inscription_id + "&inscription_period=" + inscription_period) Asignar Materia
                 a.btn.btn-secondary(href="/inscriptions/") Regresar
+
+            .col-12.py-2
+                a.btn.btn-primary(href="/inscriptions/", onclick=`FinishRegistration(${inscription_id}); return false`) Finalizar Inscripcion
+
+    script.
+        function DeleteSubjectInscription(id, subject_id){
+            fetch('/inscriptions/subject/delete',{
+                    method: "POST",
+                    body: JSON.stringify({'id': id }),
+                      headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {console.log(data); location.reload() });
+        }
+
+    script.
+        function FinishRegistration(inscription_id){
+            fetch('/inscriptions/subject/finish',{
+                    method: "POST",
+                    body: JSON.stringify({'inscription_id': inscription_id }),
+                      headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {console.log(data); location.reload() });
+        }
