@@ -43,7 +43,7 @@ router.get('/subject/:period_id', async function (req, res) { // req = request, 
 
     if (req.query.inscription_period) {
         res.render('period/list_subject', {
-            title: "Materias por periodos academicos",
+            title: "Materias a inscribir",
             list: list,
             inscription_id: req.query.inscription_id,
             inscription_period: req.query.inscription_period
