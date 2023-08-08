@@ -16,11 +16,13 @@ block content
                             th(scope='col') Aula
                             th(scope='col')
                     tbody
-                        //- -for(let i= 0; i < inscription_details.length; i++)
-                        //-     tr
-                        //-         th(scope='row')=inscription_details[i].id
-                        //-         td=inscription_details[i].a_period_subject_id
-                        //-         td=inscription_details[i].inscription_id
+                        -for(let i= 0; i < inscription_details.length; i++)
+                            tr
+                                th(scope='row')=inscription_details[i].subject_id
+                                td=subject[i].subject[0].name
+                                td=teacher[i].teacher[0].name
+                                td=inscription_details[i].section
+                                td=inscription_details[i].classroom
 
             .col-12.py-2
                 a.btn.btn-primary(href="/period/subject/" + inscription_period + "?inscription_id=" + inscription_id + "&inscription_period=" + inscription_period) Asignar Materia
