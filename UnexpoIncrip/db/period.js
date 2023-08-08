@@ -149,7 +149,9 @@ class Period {
                             s.name subject,
                             ps.teacher_id,
                             t.name teacher,
-                            ps.created_at
+                            ps.created_at,
+                            ps.section,
+                            ps.classroom
                         FROM
                             academic_period_subject ps
                         INNER JOIN
@@ -210,7 +212,9 @@ class Period {
                             subject_id: result[i].subject_id,
                             teacher_id: result[i].teacher_id,
                             teacher: result[i].teacher,
-                            created_at: result[i].created_at
+                            created_at: result[i].created_at,
+                            section: result[i].section,
+                            classroom: result[i].classroom
                         })
                     }
 
