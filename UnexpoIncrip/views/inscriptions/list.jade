@@ -15,7 +15,8 @@ block content
                             th(scope='col') Fecha Creación
                             th(scope='col') Detalles
                             th(scope='col') Estado
-                            th(scope='col') Detalles
+                            th(scope='col') Cantidad de materias
+                            th(scope='col') Materias
                     tbody
                         -for(let i= 0; i < inscriptions.length; i++)
                             tr
@@ -25,6 +26,7 @@ block content
                                 td=inscriptions[i].created_at.toLocaleString()
                                 td=inscriptions[i].detail
                                 td=inscriptions[i].status
+                                td=subjects_qty[i].inscription_detail.length
                                 td
                                     a.bi.bi-list-task.mx-2(href="/inscriptions/subject/" + inscriptions[i].id, style="text-decoration: none;")
 

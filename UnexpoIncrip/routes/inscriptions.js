@@ -11,9 +11,18 @@ router.get('/', async function (req, res) { // req = request, res = response
     var inscriptions_db = new inscriptionsDB.Inscriptions();
 
     var inscriptions = await inscriptions_db.filter({});
+    var inscription_details_list = [];
+    for(i = 0; i < inscriptions.length; i++){
+        inscription_details_list.push({
+            inscription_detail: await inscriptions_db.filter_subject_period({
+                inscription_id: inscriptions[i].id
+            })
+        })
+    }
     res.render('inscriptions/list', {
         title: "Inscripciones",
-        inscriptions: inscriptions
+        inscriptions: inscriptions,
+        subjects_qty: inscription_details_list
     });
 
 })
@@ -109,6 +118,5 @@ router.post('/subject/finish', async function (req, res) {
 
     res.send(JSON.stringify({ code: 0 }));
 })
-
 
 module.exports = router;
